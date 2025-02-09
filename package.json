@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@tfs/env-loader",
+    "name": "@toxesfoxes/env-loader",
     "version": "1.0.0",
     "description": "",
     "main": "dist/index.js",
