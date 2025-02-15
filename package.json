@@ -1,8 +1,8 @@
 {
     "private": true,
-    "name": "@toxesfoxes/env-loader",
+    "name": "@toxesfoxes/env-resolver",
     "version": "1.0.0",
-    "description": "",
+    "description": "A flexible environment file resolver for NestJS applications with support for environment-specific configurations",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {

@@ -2,6 +2,13 @@ import { Logger } from '@nestjs/common'
 import { existsSync } from 'fs'
 import { resolve } from 'path'
 import color from 'colors-cli/safe'
+
+/**
+ * Represents a part of the environment file pattern
+ * @property {string} value - The actual string value of the pattern part
+ * @property {'filename' | 'node_env'} type - Type of the pattern part
+ * @property {boolean} [optional] - Whether this part is optional in the pattern
+ */
 export type EnvPatternPart = {
     value: string
     type: 'filename' | 'node_env'
@@ -10,6 +17,11 @@ export type EnvPatternPart = {
 
 const EnvLogger = new Logger('EnvResolver')
 
+/**
+ * Processes a pattern array by replacing NODE_ENV placeholders
+ * @param pattern Array of pattern parts to process
+ * @returns Processed pattern string
+ */
 function processPattern(pattern: EnvPatternPart[]): string {
     const env = process.env.NODE_ENV || 'development'
     return pattern.map(part => {
@@ -20,6 +32,11 @@ function processPattern(pattern: EnvPatternPart[]): string {
     }).join('')
 }
 
+/**
+ * Generates all possible combinations of the pattern parts
+ * @param pattern Array of pattern parts
+ * @returns Array of possible file name combinations
+ */
 function generatePatternCombinations(pattern: EnvPatternPart[]): string[] {
     const env = process.env.NODE_ENV || 'development'
 
@@ -41,6 +58,14 @@ function generatePatternCombinations(pattern: EnvPatternPart[]): string[] {
     return combinations.map(parts => parts.join(''))
 }
 
+/**
+ * Resolves the path to an environment file based on the provided pattern
+ * @param dest Directory path where to look for .env files
+ * @param ignoreEnvSpecificWarn When true, suppresses warnings about fallback to default .env
+ * @param pattern Custom pattern for env file names
+ * @returns Resolved path to the environment file
+ * @throws {Error} When no matching environment file is found
+ */
 export function resolveEnvPath(
     dest: string,
     ignoreEnvSpecificWarn: boolean = false,
